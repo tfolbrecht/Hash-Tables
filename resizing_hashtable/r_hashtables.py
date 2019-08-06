@@ -17,15 +17,18 @@ class LinkedPair:
 # '''
 class HashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
 
 
 # '''
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
-    pass
-
+    hash = 5381
+    for character in string:
+        hash = ((hash << 5) + hash) + ord(character)
+    return hash % max
 
 # '''
 # Fill this in.
@@ -33,8 +36,10 @@ def hash(string, max):
 # Hint: Used the LL to handle collisions
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
-
+    index = hash(key, hash_table.capacity)
+    if hash_table.storage[index] is not None:
+        print(f'')
+    hash_table.storage[index] = LinkedPair(key, value)
 
 # '''
 # Fill this in.
@@ -42,8 +47,10 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
-
+    index = hash(key, hash_table.capacity)
+    if hash_table.storage[index] is None:
+        print(f'Warning there is no value associated with that key')
+    hash_table.storage[index] = None
 
 # '''
 # Fill this in.
@@ -51,7 +58,11 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    index = hash(key, hash_table.capacity)
+    if hash_table.storage[index] is None:
+        return None
+
+    return hash_table.storage[index].value
 
 
 # '''
